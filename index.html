@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Roll4Me</title>
+</head>
+<body>
+    <header class="jumbotron">Welcome to Roll4Me</header>
+    <div class="content_container_main">
+        <div class="content_container_sub">
+            <label>I want to roll a </label>
+            <select class="drop_down" id="typeOfDice" onchange="handleDiceChange()">
+                <option value="4">d4</option>
+                <option value="6">d6</option>
+                <option value="8">d8</option>
+                <option value="10">d10</option>
+                <option value="12">d12</option>
+                <option value="100">d100</option>
+            </select>
+        </div>
+        <div class="content_container_sub">
+            <label>this many times </label>
+            <select class="drop_down" id="numOfDice" onchange="handleNumChange()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+            </select>
+        </div>
+        <button onClick="handleRoll()">Go!</button>
+    </div>
+    <div class="results" id="results"></div>
+
+    <script>
+        let minimum = 1;
+        let maximum = 4;
+        let numOfRolls = 1;
+        let results = [];
+
+        function handleDiceChange() {
+            // get the type of dice from drop box above
+            let dType = document.getElementById("typeOfDice");
+            maximum = dType.options[dType.selectedIndex].value;
+        }
+
+        function handleNumChange() {
+            // get the num of rolls from drop box above
+            let rollAmt = document.getElementById("numOfDice");
+            numOfRolls = rollAmt.options[rollAmt.selectedIndex].value;
+        }
+
+        function handleRoll() {
+            results = [];
+            // store random int in results array
+            for(let i = 0; i < numOfRolls; i++) { 
+                let random = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+                results.push(random);
+            }
+            showResults();
+        }
+
+        function showResults() {
+            // loop through results array, display the elements
+            let content = "<h2>Your Results: </h2><br/><span>"
+            for(let i = 0; i < results.length; i++) {
+                content += `<p>${results[i]}</p>`;
+            }
+            content += "</span>"
+            let resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = content;
+            resultsDiv.style.display = "flex";
+        }
+
+    </script>
+</body>
+</html>
